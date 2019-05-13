@@ -157,11 +157,11 @@ baidu_push: false
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, question icon will be loaded.
 # External url should start with http:// or https://
 menu:
-  主页: / || home
-  归档: /archives/ || archive
-  关于: /about/ || user
-  标签: /tags/ || tags
-  分类: /categories/ || th
+  home: / || home
+  archives: /archives/ || archive
+  about: /about/ || user
+  tags: /tags/ || tags
+  categories: /categories/ || th
   # schedule: /schedule/ || calendar
   # sitemap: /sitemap.xml || sitemap
   # commonweal: /404/ || heartbeat
