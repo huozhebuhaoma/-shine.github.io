@@ -5,9 +5,9 @@ date: 2019-06-04 22:41:21
 tags: ["Hexo","教程"]
 categories: "Hexo"
 ---
-花了几天的时间在`GitHub`的`page`整了个博客，使用了`Hexo`来搭建。搞了那么久发现搭起来容易，想整的好看点，好吧，也很容易，不过步骤和内容有点多，这里就做了个整合当做备忘，也给看到的有缘人一点微不足道的帮助。
+花了几天的时间在`GitHub`的`page`整了个博客，使用了`Hexo`来搭建。搞了那么久发现搭起来容易，想整的好看点，好吧，也很容易，不过步骤和内容有点多，这里就做了个整合当做备忘，也给看到的有缘人一点点的帮助。
 
-因为我用的是 window 其他系统没用过也不知道，就不误人子弟了，以下的内容都是基于 window 来说明的。
+因为我用的是 window 其他系统没用过也不知道，所以以下的内容都是基于 window 来说明的。
 ### Hexo搭建步骤
 1. GitHub创建个人仓库
 2. 安装Git
@@ -15,8 +15,7 @@ categories: "Hexo"
 4. 安装Hexo
 5. 生成SSH添加到GitHub
 6. 将hexo部署到GitHub
-7. 设置个人域名
-8. 发布文章
+7. 发布文章
 
 #### 1.GitHub创建个人仓库
 首先，你先要有一个[GitHub](https://github.com)账户，去注册一个吧。
@@ -76,7 +75,7 @@ hexo server
 打开hexo的服务，在浏览器输入`localhost:4000`就可以看到你生成的博客了。
 使用ctrl+c可以把服务关掉。
 #### 5. 生成SSH添加到GitHub
-回到git bash中，
+回到`git bash`中，
 ```
 git config --global user.name "windliang"
 git config --global user.email "windliang@xx.com"
@@ -88,7 +87,7 @@ git config --global user.email "windliang@xx.com"
 git config user.name
 git config user.email
 ```
-然后创建SSH,一路回车
+然后创建 SSH,一路回车
 ```
 ssh-keygen -t rsa -C "windliang@xx.com"
 ```
@@ -96,10 +95,45 @@ ssh-keygen -t rsa -C "windliang@xx.com"
 
 ssh，简单来讲，就是一个秘钥，其中，id_rsa 是你这台电脑的私人秘钥，不能给别人看的，id_rsa.pub 是公共秘钥，可以随便给别人看。把这个公钥放在 GitHub 上，这样当你链接 GitHub 自己的账户时，它就会根据公钥匹配你的私钥，当能够相互匹配时，才能够顺利的通过 git 上传你的文件到 GitHub 上。
 
-而后在 GitHub 的 setting 中，找到 SSH keys 的设置选项，点击 New SSH key 把你的 id_rsa.pub 里面的信息复制进去。
+而后在 GitHub 的 setting 中，找到 SSH keys 的设置选项，点击`New SSH key`把你的`id_rsa.pub`里面的信息复制进去。
 ![](https://raw.githubusercontent.com/windliang/windliang.github.io/hexo/source/_posts/hexo%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/3.jpg)
 
 在`git bash`中，查看是否成功。
 ```
 ssh -T git@github.com
 ```
+#### 6. 将hexo部署到GitHub
+打开站点配置文件`_config.yml`，翻到最后，修改为
+```
+deploy:
+type: git
+repo: https://github.com/windliang/windliang.github.io.git
+branch: master
+```
+接着安装`deploy-git` ，也就是部署的命令,这样才能用命令部署到 GitHub。
+```
+npm install hexo-deployer-git --save
+```
+然后使用下面 3 个命令，以后修改文章后也是运行这几个命令
+```
+hexo clean
+hexo generate
+hexo deploy
+```
+其中 `hexo clean`清除了你之前生成的东西，也可以不加。
+`hexo generate`顾名思义，生成静态文章，可以用 `hexo g`缩写。
+`hexo deploy`部署文章，可以用`hexo d`缩写。
+
+然后就可以在`http://windliang.github.io`这个网站看到你的博客了！！
+#### 7. 发布文章
+使用下面的命令生成新的文章
+```
+hexo new newpapername
+```
+然后在`source/_post`中打开生成的`markdown`文件，就可以开始编辑了。当你写完的时候，再
+```
+hexo clean
+hexo g
+hexo d
+```
+刷新就可以看到文章了，有时候看不到可以清下缓存再刷新。
